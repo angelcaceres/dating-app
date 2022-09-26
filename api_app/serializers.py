@@ -7,7 +7,8 @@ class UserSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(max_length=200)
     bio = serializers.CharField(max_length=200)
     date_of_birth = serializers.DateField()
+    
 
-    class Meta:
-        model = User
-        fields = ('__all__')
+class Meta:
+    model = User
+    fields = ('__all__')
