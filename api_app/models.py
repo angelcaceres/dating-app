@@ -3,6 +3,21 @@ from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+ZODIAC_SIGNS = (
+    ("Aries", "Aries"),
+    ("Tauro", "Taurus"),
+    ("Geminis", "Gemini"),
+    ("Cancer", "Cancer"),
+    ("Leo", "Leo"),
+    ("Virgo", "Virgo"),
+    ("Libra", "Libra"),
+    ("Escorpio", "Escorpio"),
+    ("Sagitario", "Sagitario"),
+    ("Capricornio", "Capricornio"),
+    ("Acuario", "Acuario"),
+    ("Piscis", "Piscis"),
+)
+
 class InterestCategory(models.Model):
     lang = models.CharField(max_length=2)
     name = models.CharField(max_length=50)
@@ -14,8 +29,7 @@ class Interest(models.Model):
     on_delete=models.CASCADE)
 
 class ZodiacSign(models.Model):
-    lang = models.CharField(max_length=2)
-    name = models.CharField(max_length=50)
+    name = models.CharField(choices=ZODIAC_SIGNS, max_length=11)
 
 class PoliticalView(models.Model):
     lang = models.CharField(max_length=2)
@@ -98,7 +112,7 @@ class User(models.Model):
     questions = models.ManyToManyField(Question, default=None)
     instagram = models.ManyToManyField(Instagram, default=None)
     spotify = models.ManyToManyField(Spotify, default=None)
-    location = models.ManyToManyField(Municipio, default=None)
-    city_of_origin = models.ManyToManyField(City, default=None)
+    location = models.ForeignKey(City, default=None, on_delete=models.CASCADE)
+    city_of_origin = models.ForeignKey(City, default=None, on_delete=models.CASCADE, related_name="city_origin")
     date_of_birth = models.DateField()
     is_paid_profile = models.BooleanField(default=False)
