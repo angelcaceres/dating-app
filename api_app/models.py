@@ -118,37 +118,6 @@ class Interest(models.Model):
     category = models.ForeignKey(InterestCategory,
     on_delete=models.CASCADE)
 
-class ZodiacSign(models.Model):
-    name = models.CharField(choices=ZODIAC_SIGNS, max_length=11)
-
-class PoliticalView(models.Model):
-    name = models.CharField(choices=POLITICAL_VIEWS, max_length=11)
-
-class Workout(models.Model):
-    name = models.CharField(choices=WORKOUT_OPTIONS, max_length=10)
-
-class Education(models.Model):
-    name = models.CharField(choices=EDUCATION_OPTIONS, max_length=27)
-
-class Drinking(models.Model):
-    name = models.CharField(choices=DRINKING_OPTIONS, max_length=16)
-
-class Smoking(models.Model):
-    name = models.CharField(choices=SMOKING_OPTIONS, max_length=16)
-
-class Gender(models.Model):
-    show = models.BooleanField(default= True)
-    name = models.CharField(choices=GENDER_OPTIONS, max_length=10)
-
-class Kids(models.Model):
-    name = models.CharField(choices=KIDS_OPTIONS, max_length=25)
-
-class LookingFor(models.Model):
-    name = models.CharField(choices=LOOKING_FOR_OPTIONS, max_length=12)
-
-class Religion(models.Model):
-    name = models.CharField(choices=RELIGION_OPTIONS, max_length=12)
-
 class Languages(models.Model):
     lang = models.CharField(max_length = 2)
     name = models.CharField(max_length=50)
@@ -177,19 +146,19 @@ class User(models.Model):
     last_name = models.CharField(max_length=50)
     bio = models.CharField(max_length=200)
     interests = models.ManyToManyField(Interest, default=None)
-    zodiac_sign = models.ManyToManyField(ZodiacSign, default=None)
-    political_views = models.ManyToManyField(PoliticalView, default=None)
+    zodiac_sign = models.CharField(choices=ZODIAC_SIGNS, max_length=11, default=None)
+    political_views = models.CharField(choices=POLITICAL_VIEWS, max_length=11, default=None)
     # connections -> list of users
     height_in_cm = models.IntegerField(validators = [MaxValueValidator(220), MinValueValidator(99)], 
     default=0)
-    workout = models.ManyToManyField(Workout, default=None)
-    education = models.ManyToManyField(Education, default=None)
-    drinking = models.ManyToManyField(Drinking, default=None)
-    smoking = models.ManyToManyField(Smoking, default=None)
-    gender = models.ManyToManyField(Gender, default=None)
-    looking_for = models.ManyToManyField(LookingFor, default=None)
-    kids = models.ManyToManyField(Kids, default=None)
-    religion = models.ManyToManyField(Religion, default=None)
+    workout = models.CharField(choices=WORKOUT_OPTIONS, max_length=10, default=None)
+    education = models.CharField(choices=EDUCATION_OPTIONS, max_length=27, default=None)
+    drinking = models.CharField(choices=DRINKING_OPTIONS, max_length=16, default=None)
+    smoking = models.CharField(choices=SMOKING_OPTIONS, max_length=16, default=None)
+    gender = models.CharField(choices=GENDER_OPTIONS, max_length=10, default=None)
+    looking_for = models.CharField(choices=LOOKING_FOR_OPTIONS, max_length=12, default=None)
+    kids = models.CharField(choices=KIDS_OPTIONS, max_length=25, default=None)
+    religion = models.CharField(choices=RELIGION_OPTIONS, max_length=12, default=None)
     languages = models.ManyToManyField(Languages, default=None)
     questions = models.ManyToManyField(Question, default=None)
     instagram = models.ManyToManyField(Instagram, default=None)
